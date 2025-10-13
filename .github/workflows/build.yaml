@@ -1,4 +1,4 @@
-name: Build
+name: Build Workflow
 
 on:
   workflow_call:
@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: '1.28'
       - uses: gardener/cc-utils/.github/actions/trusted-checkout@master
       - name: run-test
         run: |
@@ -71,7 +71,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: '1.28'
       - uses: gardener/cc-utils/.github/actions/trusted-checkout@master
       - name: run-check
         run: |
@@ -100,3 +100,12 @@ jobs:
                 value: |
                   we use gosec (linter) for SAST scans
                   see: https://github.com/securego/gosec
+                  - name: test-results
+                  relation: local
+                  access:
+                  type: localBlob
+                  localReference: verify-log.tar.gz
+                  labels:
+                  - name: gardener.cloud/purpose
+                  value:
+                  - test 
